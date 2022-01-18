@@ -1,11 +1,16 @@
-const { request } = require('express')
 const express = require('express')
+const mongoose = require('mongoose')
 const articleRouter = require('./routes/articles')
 const app = express()
+
+mongoose.connect('mongodb://localhost:27017/markdown-blog', {
+  useNewUrlParser: true
+})
 
 app.set('view engine', 'ejs')
 
 app.use('/articles', articleRouter)
+app.use(express.urlencoded({ extended: false }))
 
 const articles = [{
   title: 'article 1',
